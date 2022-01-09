@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { deleteTodo,  } from '../redux/actions';
+import { deleteTodo,updateTodo  } from '../redux/actions';
 import './TodoItem.css';
 function TodoItem({ todo }) {
     const [editable, setEditable] = useState(false)
@@ -24,7 +24,20 @@ function TodoItem({ todo }) {
                         :
                         <h4>{todo.name}</h4>}
                 </div>
-                
+                <button className="btn btn-primary m-2"
+                    onClick={() => {
+                        dispatch(updateTodo({
+                            ...todo,
+                            name: name
+                        }))
+                        if(editable) {
+                         setName(todo.name);   
+                        }
+                        setEditable(!editable);
+                      
+
+                    }}
+                >{editable?"Update":"Edit"}</button>
                 <Button className="danger "
                     onClick={() => dispatch(deleteTodo(todo.id))}
                 >Delete</Button>
